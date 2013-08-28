@@ -1,0 +1,90 @@
+body {
+	text-align: center;
+	font-size: 13px;
+	font-family: 微软雅黑, verdana, arial
+}
+
+.wrapper {
+	text-align: left;
+	margin: 0 auto;
+	width: 800px;
+	background-color: #eee;
+	border: 1px black solid;
+	padding: 20px 10px 10px 10px;
+}
+
+h1 {
+	font-size: 18px;
+}
+
+.p {
+	line-height: 1.5em;
+	font-family: 微软雅黑, verdana arial;
+}
+
+.links {
+	background-color: #fff;
+	padding: 10px;
+	border: 1px #ccc solid;
+	margin-top: 20px;
+}
+
+.ext-form {
+	text-align: left;
+}
+
+.links input {
+	padding: 5px;
+	margin: 10px;
+}
+
+.links tr:hover {
+	background-color: #EDEDED;
+}
+
+#searchArea {
+	width: 100%;
+}
+
+#logo {
+	display: block;
+	overflow: hidden;
+	height: 80px;
+	width: 220px;
+}
+
+#shoulder {
+	clear: both;
+	width: 100%;
+	background: #E5ECF9 none repeat scroll 0%;
+	border-top: 1px solid #3366CC;
+	line-height: 1.5em;
+	float: left;
+	margin-top: 5px;
+	padding: 0px 3px 2px 3px;
+	text-align: left;
+}
+
+#shoulder .pageComment {
+	float: right;
+	display: block;
+}
+
+#advSearchForm {
+	margin: auto;
+	width: 90%;
+	border: 3px #cbdced solid;
+	margin-top: 20px;
+}
+
+#advSearchForm tr {
+	text-align: left;
+}
+
+#advSearchForm label {
+	font-weight: bold;
+}
+
+#advSearchForm td {
+	padding: 5px 0px 0px 5px;
+}

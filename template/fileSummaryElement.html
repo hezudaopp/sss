@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>批量查询结果</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear:both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+
+.red{
+	color:white;
+	background-color: red;
+}
+
+.blue{
+	color:white;
+	background-color: blue;
+}
+
+.brown{
+	background-color: brown;
+	color:white;
+}
+
+.chocolate{
+	background-color: chocolate;
+	color:white;
+}
+
+.sienna{
+	background-color:sienna;
+	color:white;
+}
+
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+
+.lightGreen{
+	color:black;
+	background-color: #cbdced;
+}
+.yellow{
+	color: black;
+	background-color: yellow;
+}
+
+a:link{
+	color: black;
+	backgroud-color:white;
+}
+
+		</style>
+		<script type="text/javascript">	
+			function deleteConfirm(){
+				return window.confirm('你确实要删除该文件的所有条目吗？');
+			}
+		
+		</script>
+	</head>
+	<body>
+	<{if $batchSearch}>
+	<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1;">
+			<span><a href="excelUpload.html">表格上传</a></span>
+			| <span><a href="index.html">主页</a></span>
+			| <span><a href="batchSearch.html">回到批量查询页面</a></span>
+	</div>
+	<{/if}>
+	
+	<{if $manufactory}>
+		<span><{$filename}></span>
+		<span class="exportBtn">
+				<a href="exportFileSummaryElementTable.php?id=<{$id}>" title="点击进行导出结果">导出表格</a>
+		</span>
+	
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th style="width:14em">厂家</th>
+			<th style="width:5em">库存地</th>
+			<th style="width:5em">目的地</th>
+			<th style="width:6em">备注</th>
+		</tr>
+		
+		<{section name=summaryElement loop=$manufactory}>
+		<tr>
+			<td><{$manufactory[summaryElement]}></td>
+			<td><{$storePlace[summaryElement]}></td>
+			<td><{$destination[summaryElement]}></td>
+			<td><{$remark[summaryElement]}></td>
+		</tr>
+		<{/section}>
+
+	</table>
+	<{else}>
+		抱歉没有符合你搜索的条目
+	<{/if}>
+	
+	</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Excellent</title>
+<link type="text/css" rel="stylesheet" href="../css/default.css" />
+<!--		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-all.css" />
+		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-patch.css" />
+		
+	
+		<script type="text/javascript" src="../ext2.0/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ext2.0/ext-all-debug.js"></script>
+		<script type="text/javascript" src="../ext2.0/source/locale/ext-lang-zh_CN.js"></script>
+-->
+<script type="text/javascript">
+		//Ext.BLANK_IMAGE_URL = "../ext2.0/resources/images/default/s.gif";
+		
+		function get_nonblank(id) {
+          var entry = document.getElementById(id).value;
+          return entry.replace(/^\s+$/,""); //remove whitespace
+        }
+		
+		function get_phaseradio(){
+			inputs = document.getElementsByName('phase');
+			radio = new Array();
+			for(i in inputs){
+				if(inputs[i].getAttribute('name') == 'phase'){
+					radio.push(inputs[i]);
+				}
+			}
+		}
+		
+        function check_1stFields() {
+          var file = get_nonblank("1stFile");
+          if (file == "") {
+            alert("请选择要上传的文件.");
+            return false;
+          }
+          return true;
+        }
+
+        function check_2ndFields() {
+            var file = get_nonblank("2ndFile0");
+            if (file == "") {
+              alert("请选择要上传的文件.");
+              return false;
+            }
+            file = get_nonblank("2ndFile1");
+            if (file == "") {
+                alert("请选择要上传的文件.");
+                return false;
+              }
+            return true;
+          }
+
+        function check_3rdFields() {
+            var file = get_nonblank("3rdFile0");
+            if (file == "") {
+              alert("请选择要上传的文件.");
+              return false;
+            }
+            file = get_nonblank("3rdFile1");
+            if (file == "") {
+                alert("请选择要上传的文件.");
+                return false;
+              }
+            return true;
+          }
+       	 function check_4thFields() {
+            var file = get_nonblank("4thFile0");
+            if (file == "") {
+              alert("请选择要上传的文件.");
+              return false;
+            }
+            file = get_nonblank("4thFile1");
+            if (file == "") {
+                alert("请选择要上传的文件.");
+                return false;
+              }
+            return true;
+          }
+		</script>
+</head>
+
+<body>
+<div class="wrapper">
+<h1>Excellent</h1>
+<hr />
+<p>电子表格同步工具， 在这里上传电子表格：</p>
+<div class="links">
+<table style="width: 100%;">
+	<tr>
+		<td>
+		<form name="form1" action="excelOperator1.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_1stFields();">
+		<label for="1stFile">第一步：</label><br />
+		原始清单：<input name="1stFile" id="1stFile" size="38" style="width: 85%;"
+			type="file" /><br />
+		<input type="submit" value=" 上传 " /></form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="form2" action="excelOperator2.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_2ndFields();">
+		<label for="2ndFile0">第二步：（A0表格是第一部得到的表格；当有新表格来，旧表格也得重新比较）</label><br />
+		A0表格：&nbsp;&nbsp;<input name="2ndFile0" id="2ndFile0" size="38"
+			style="width: 85%;" type="file" /><br /> A1表格：&nbsp;&nbsp;<input name="2ndFile1"
+			id="2ndFile1" size="38" style="width: 85%;" type="file" /><br /> A2表格：&nbsp;&nbsp;<input
+			name="2ndFile2" id="2ndFile2" size="38" style="width: 85%;"
+			type="file" /><br /> A3表格：&nbsp;&nbsp;<input name="2ndFile3" id="2ndFile3" size="38"
+			style="width: 85%;" type="file" /><br />
+		<input type="submit" value=" 上传 " />
+		</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="form3" action="excelOperator3.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_3rdFields();">
+		<label for="3rdFile0">第三步：(B0表格是由第二部得到的表格添加列之后得到)</label><br />
+		原始清单：<input name="3rdFile0" id="3rdFile0" size="38" style="width: 85%;"
+			type="file" /><br />
+		B0表格：&nbsp;&nbsp;<input name="3rdFile1" id="3rdFile1" size="38" style="width: 85%;"
+		type="file" /><br />
+		<input type="submit" value=" 上传 " />
+		</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="form4" action="excelOperator4.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_4thFields();">
+		<label for="4thFile0">第四步：（M0表格是第三步得到的表格）</label><br />
+		M0表格：&nbsp;&nbsp;<input name="4thFile0" id="4thFile0" size="38" style="width: 85%;"
+			type="file" /><br />
+		价格表格：<input name="4thFile1" id="4thFile1" size="38" style="width: 85%;"
+		type="file" /><br />
+		<input type="submit" value=" 上传 " />
+		</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form action="excelOperator5.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_5thFields();">
+		<label for="5thFile"><a href="excelOperator5.html">第五步</a></label><br />
+		</form>
+		</td>
+	</tr>
+</table>
+</div>
+<!--<div><a
+	style="color: white; display: block; float: right; background-color: blue"
+	href="index.html" title="回到首页">回主页</a><br />
+</div>
+
+--><div style="clear: both"></div>
+</div>
+</body>
+</html>

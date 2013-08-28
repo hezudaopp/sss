@@ -1,0 +1,49 @@
+<?php
+require_once ('../includes/SmartyManager.class.php');
+require_once ('../includes/DB.class.php');
+require_once ('../includes/exceptions' . DS . 'AppExceptions.class.php');
+require_once ('../includes/LogInserter.class.php');
+
+$smarty = SmartyManager::getSmarty ();
+$dels = array ();
+foreach ( $_POST as $key => $val ) {
+	if (stristr ( $key, "del" )) {
+		$vals = explode("_",$val);
+		$itemDelStr = "(materialCode = '$vals[0]' and orderNumber = '$vals[1]' and orderSubitemNumber = '$vals[2]')"; 
+		array_push ( $dels, $itemDelStr );
+	}
+}
+
+$delStats = join(" or ",$dels);
+
+if (! empty ( $dels )) {
+	try {
+		DB::beginTransaction ();
+				$query1 = "UPDATE `sss_main` SET `certificateNumber` = NULL, `checkoutBatch` = NULL
+							where $delStats";
+				$query2 = "UPDATE `sss_fache` SET `certificateNumber` = NULL, `checkoutBatch` = NULL
+							where $delStats";
+				$query3 = "UPDATE `sss_fachuan` SET `certificateNumber` = NULL, `checkoutBatch` = NULL
+							where $delStats";
+				DB::query($query1);
+				DB::query($query2);
+				DB::query($query3);						
+		$query = "delete from sss_list where $delStats";
+		DB::query ( $query );
+		DB::commit ();
+	} catch ( Exception $e ) {
+		DB::rollback ();
+		$smarty->assign ( "errTitle", '删除结算清单记录失败' );
+		$smarty->assign ( 'errorType', 'listDelete' );
+		$smarty->assign ( 'errMsg', $e );
+		$smarty->display ( 'error.html' );
+		die ();
+	}
+}
+
+$smarty->assign ( "successTitle", '删除结算清单记录成功' );
+$smarty->assign ( 'successType', 'listDelete' );
+$smarty->assign ( 'successMsg', '删除记录成功' );
+$smarty->display ( 'success.html' );
+
+?>

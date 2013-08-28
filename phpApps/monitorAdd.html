@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>上传监控文件-SSS: Spread Sheet Synchronizer</title>
+		<link type="text/css" rel="stylesheet" href="../css/default.css" />
+<!--		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-all.css" />
+		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-patch.css" />
+		
+	
+		<script type="text/javascript" src="../ext2.0/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ext2.0/ext-all-debug.js"></script>
+		<script type="text/javascript" src="../ext2.0/source/locale/ext-lang-zh_CN.js"></script>
+-->
+		<script type="text/javascript">
+		//Ext.BLANK_IMAGE_URL = "../ext2.0/resources/images/default/s.gif";
+		
+		function get_nonblank(id) {
+          var entry = document.getElementById(id).value;
+          return entry.replace(/^\s+$/,""); //remove whitespace
+        }
+		
+        function check_monitorUploadFields() {
+          var file = get_nonblank("monitorUpload");
+          if (file == "") {
+            alert("请选择要上传的文件.");
+            return false;
+          }
+          return true;
+        }
+		
+		</script>
+	</head>
+	
+	<body>
+	<div class="wrapper">
+		<h1>SSS-上传监控文件</h1><hr />
+		<div class="links">
+		<table style="width:100%;">
+		<tr>
+		<td>
+		<form action="monitorUpload.php" method="post" enctype="multipart/form-data" onsubmit="return check_monitorUploadFields();">
+		<label for="monitorUpload">上传监控文件：</label><br />
+		<input name="monitorFile"  id="monitorFile" size="38" style="width: 90%;" type="file" /><br />
+		<!-- input type="checkbox" value="all" name="all" checked="checked" /><label for="all"> 全部 </label>
+		<input type="checkbox" value="材料代码" name="materialCode" /><label for="materialCode">材料代码</label>
+		<input type="checkbox" value="船级" name="ships" /><label for="ships">船级</label>
+		<input type="checkbox" value="材质" name="material" /><label for="material">材质</label>
+		<input type="checkbox" value="厚宽长" name="size" /><label for="size">厚宽长</label>
+		<input type="checkbox" value="订单号" name="orderNumber" /><label for="orderNumber">订单号</label>
+		<input type="checkbox" value="订单子项号" name="orderSubitemNumber" /><label for="orderSubitemNumber">订单子项号</label><br />
+		<br/ -->
+		添加监控描述：(最多250个汉字)<br />
+		<textarea cols="50" rows="3" style="margin:5px;" name="record"></textarea><br />
+		
+		<input type="submit" value=" 上传 " />
+		</form>
+</td></tr>
+		</table>
+		</div>
+		<div>
+		<a style="color:white; display:block; float:right; background-color:blue" href="monitors.php">-->回监控页面</a><br />
+		<a style="color:white; display:block; float:right; background-color:blue" href="index.html" title="回到首页">-->回主页</a>
+		</div>
+		
+		<div style="clear:both"></div>
+	</div>
+	</body>
+</html>

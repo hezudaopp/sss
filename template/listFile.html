@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>批量查询结果</title>
+<style>
+td {
+	border-right: 1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding: 3px;
+}
+
+th {
+	background-color: #cbdced;
+	padding: 3px;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+table {
+	clear: both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+
+body {
+	font-size: 14px;
+}
+
+.red {
+	color: white;
+	background-color: red;
+}
+
+.green {
+	color: white;
+	background-color: green;
+}
+
+.exportBtn {
+	margin-right: 30px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	float: right;
+	display: block;
+	padding: 1px;
+}
+
+span[class=exportBtn]:hover {
+	background-color: #8A95A1;
+	color: white;
+}
+
+.lightGreen {
+	color: black;
+	background-color: #cbdced;
+}
+
+.yellow {
+	color: black;
+	background-color: yellow;
+}
+</style>
+<script type="text/javascript">
+		function allChecksChange(obj){
+			checks = document.getElementsByTagName("input");
+			for(i = 0; i < checks.length; i++){
+				o = checks[i];
+				type = o.attributes.getNamedItem("type");
+				if(type.nodeValue == 'checkbox'){
+					o.checked = obj.checked;
+				}
+			}
+			//checks.checked = obj.checked;
+		}
+		
+		function deleteConfirm(){
+			return window.confirm('你确实要删除选中的这些记录吗？');
+		}
+		</script>
+</head>
+<body>
+<{if $batchSearch}>
+<div id="sbar"
+	style="width: 100%; padding: 0px 0px 4px 0px; border-bottom: 1px solid #c9d7f1;">
+<span><a href="excelUpload.html">表格上传</a></span> | <span><a
+	href="index.html">主页</a></span> | <span><a href="batchSearch.html">回到批量查询页面</a></span>
+</div>
+<{/if}> <{if $materialCode}>
+
+<form action="listItemsDelete.php" method="POST"
+	onsubmit="return deleteConfirm()"><span class="exportBtn"><input
+	type="submit" value="删除" /></span>
+	
+	<span class="exportBtn"> <a href="exportFileListTable.php?id=<{$id}>"
+title="点击进行导出结果">导出表格</a> </span>
+<span class="exportBtn">
+</span>
+
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<th style="width: 10em">材料代码</th>
+		<th style="width: 8em">出库日期</th>
+		<th style="width: 6em">车号|船号</th>
+		<th style="width: 5em">船级</th>
+		<th style="width: 5em">材质</th>
+		<th style="width: 6em">厚</th>
+		<th style="width: 6em">宽</th>
+		<th style="width: 6em">长</th>
+		<th style="width: 6em">数量</th>
+		<th style="width: 6em">单重</th>
+		<th style="width: 6em">重量</th>
+		<th style="min-width: 12em">文件名</th>
+		<th style="width: 10em">订单号</th>
+		<th style="width: 5em">订单子项号</th>
+		<th style="width: 6em">受订单价</th>
+		<th style="width: 6em">批号</th>
+		<th style="width: 6em">购单号</th>
+		<th style="width: 6em">目的地</th>
+		<th style="width: 6em">库存地</th>
+		<th style="width: 6em">证书号</th>
+		<th style="width: 6em">结算批号</th>
+		<th style="width: 5em">备注</th>
+		<th style="width: 2em">删除 <input type="checkbox" name="i_d" checked="checked"
+			onchange="allChecksChange(this)" /></th>
+	</tr>
+
+	<{section name=main loop=$materialCode}>
+	<tr>
+		<td><a href="multipleTable.php?keyname=<{$materialCode[main]}>&orderNumber=<{$orderNumber[main]}>&orderSubitemNumber=<{$orderSubitemNumber[main]}>">
+			<{$materialCode[main]}></a></td>
+			<td><{$chukuDate[main]}></td>
+			<td><{$chukuNumber[main]}></td>
+			<td><{$shipsClassification[main]}></td>
+			<td><{$material[main]}></td>
+			<td><{$thickness[main]}></td>
+			<td><{$width[main]}></td>
+			<td><{$length[main]}></td>
+			<td><{$count[main]}></td>
+			<td><{$unitWeight[main]}></td>
+			<td><{$weight[main]}></td>
+			<td><{$filename[main]}></td>
+			<td><{$orderNumber[main]}></td>
+			<td><{$orderSubitemNumber[main]}></td>
+			<td><{$unitPrice[main]}></td>
+			<td><{$batchNumber[main]|truncate:15}></td>
+			<td><{$purchaseNumber[main]}></td>
+			<td><{$destination[main]}></td>
+			<td><{$storePlace[main]}></td>
+			<td><{$certificateNumber[main]}></td>
+			<td><{$checkoutBatch[main]}></td>
+			<td><{$remarks[main]}></td>
+			<td align="center"><input name="del<{$materialCode[main]}>_<{$orderNumber[main]}>_<{$orderSubitemNumber[main]}>" value="<{$materialCode[main]}>_<{$orderNumber[main]}>_<{$orderSubitemNumber[main]}>" checked="chekced" type="checkbox" /></td>
+		</tr>
+	<{/section}>
+
+</table>
+</form>
+
+<{else}> 抱歉没有符合你搜索的条目 <{/if}>
+
+</body>
+</html>

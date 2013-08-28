@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SSS: Spread Sheet Synchronizer</title>
+<link type="text/css" rel="stylesheet" href="../css/default.css" />
+<!--		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-all.css" />
+		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-patch.css" />
+		
+	
+		<script type="text/javascript" src="../ext2.0/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ext2.0/ext-all-debug.js"></script>
+		<script type="text/javascript" src="../ext2.0/source/locale/ext-lang-zh_CN.js"></script>
+-->
+<script type="text/javascript">
+		//Ext.BLANK_IMAGE_URL = "../ext2.0/resources/images/default/s.gif";
+		
+		function get_nonblank(id) {
+          var entry = document.getElementById(id).value;
+          return entry.replace(/^\s+$/,""); //remove whitespace
+        }
+		
+		function get_phaseradio(){
+			inputs = document.getElementsByName('phase');
+			radio = new Array();
+			for(i in inputs){
+				if(inputs[i].getAttribute('name') == 'phase'){
+					radio.push(inputs[i]);
+				}
+			}
+		}
+		
+        function check_planFields() {
+          var file = get_nonblank("planFile");
+          if (file == "") {
+            alert("请选择要上传的文件.");
+            return false;
+          }
+          return true;
+        }
+		
+		function check_radiocheck(){
+			var choose = false;
+			phase = document.getElementsByName('phase');
+			for( i in phase){
+				if(phase[i].checked){
+					choose = true;
+					return true;
+				}
+			}
+			if(!choose){
+				alert('请选择发车阶段：是入库，还是出库，还是直接销售？');
+				return false;
+			}
+			return true;
+		}
+		
+		function check_truckFields(){
+			var file = get_nonblank("truckFile");
+			if (file == "") {
+				alert("请选择要上传的发车文件.");
+				return false;
+			}
+			
+			return check_radiocheck();
+        }
+		
+		function check_shipFields() {
+          var file = get_nonblank("shipFile");
+          if (file == "") {
+            alert("请选择要上传的发船文件.");
+            return false;
+          }
+          return true;
+        }
+		
+		</script>
+</head>
+
+<body>
+<div class="wrapper">
+<h1>SSS: Spread Sheet Synchronizer</h1>
+<hr />
+<p>电子表格同步工具， 在这里上传电子表格：</p>
+<div class="links">
+<table style="width: 100%;">
+	<tr>
+		<td>
+		<form action="mainUpload.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_planFields();">
+		<label for="planFile">上传导入总表：</label><br />
+		<input name="planFile" id="planFile" size="38" style="width: 90%;"
+			type="file" /><br />
+		<input type="submit" value=" 上传 " /></form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form action="facheUpload.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_truckFields();">
+		<label for="truckFile">上传发车Excel表格：</label><br />
+		<input name="truckFile" id="truckFile" size="38" style="width: 90%;"
+			type="file" /><br />
+		<input type="radio" name="phase" value="0"
+			style="vertical-align: middle;" /><label for="phase">入库</label> <input
+			type="radio" name="phase" value="1" style="vertical-align: middle;" /><label
+			for="phase">出库</label> <input type="radio" name="phase" value="2"
+			style="vertical-align: middle;" /><label for="phase">销售</label><br />
+		<input type="submit" value=" 上传 " /></form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form action="fachuanUpload.php" method="post"
+			enctype="multipart/form-data" onsubmit="return check_shipFields();">
+		<label for="shipFile">上传发船Excel表格：</label><br />
+		<input name="shipFile" id="shipFile" size="38" style="width: 90%;"
+			type="file" /><br />
+		<input type="submit" value=" 上传 " /></form>
+
+		</td>
+	</tr>
+</table>
+</div>
+<div><a
+	style="color: white; display: block; float: right; background-color: blue"
+	href="index.html" title="回到首页">-->回主页</a><br />
+<a
+	style="color: white; display: block; float: right; background-color: blue"
+	href="clear.php">-->进入清理界面</a></div>
+
+<div style="clear: both"></div>
+</div>
+</body>
+</html>

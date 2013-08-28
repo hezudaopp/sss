@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>查询结果</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear:both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+.green{
+	color:green;
+}
+
+.red{
+	background-color:red;
+	color: white;
+}
+
+.blue{
+	background-color: blue;
+	color:white;
+}
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+		</style>
+		<script type="text/javascript"  language="Javascript">
+		function checkForDelete(mc){
+			return window.confirm('确实要删除所有材料代码，订单号，订单子项号为这样的记录吗？');
+		}
+		</script>
+	</head>
+	<body>
+	<{if $noFile}>
+	当前文件条目为空
+	<{else}>
+			<span class="exportBtn">
+			<{if $jiapian}>
+					<a href="exportJiapianStatTable.php?showFilename=true" title="点击进行导出带文件名的结果">导出带文件名的表格</a>
+			<{elseif $biangang}>
+			<a href="exportBiangangStatTable.php?showFilename=true" title="点击进行导出带文件名的结果">导出带文件名的表格</a>
+			<{else}>
+					<a href="exportChineseCharsStatTable.php?showFilename=true" title="点击进行导出带文件名的结果">导出带文件名的表格</a>
+			<{/if}>
+			</span>
+			<span class="exportBtn">
+			<{if $jiapian}>
+				<a href="exportJiapianStatTable.php" title="点击进行导出结果">导出表格</a>
+			<{elseif $biangang}>
+			<a href="exportBiangangStatTable.php" title="点击进行导出结果">导出表格</a>
+			<{else}>
+				<a href="exportChineseCharsStatTable.php" title="点击进行导出结果">导出表格</a>
+			<{/if}>
+					
+			</span>
+	<div class="clear"></div>
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th style="width:20em">材料代码</th>
+			<th style="width:5em">船级</th>
+			<th style="width:5em">材质</th>
+			<th style="width:6em">厚</th>
+			<th style="width:6em">宽</th>
+			<th style="width:6em">长</th>
+			<th style="width:6em">总量</th>
+			<th style="width:6em">未入库</th>
+			<th style="width:6em">库中</th>
+			<th style="width:6em">已销售</th>
+			<th style="width:6em">订单号</th>
+			<th style="width:6em">订单子项号</th>
+			<th style="width:6em">受订单价</th>
+			<th style="max-width: 16px">批号</th>
+			<th style="width:6em">物料号</th>
+			<th style="width:6em">购单号</th>
+			<th style="width:6em">目的地</th>
+			<th style="width:6em">库存地</th>
+			<th style="max-width: 16px">证书号</th>
+			<th style="width:6em">结算批号</th>
+			<th style="width:6em">发货批次</th>
+			<th style="width:6em">详细</th>
+			<th style="width:6em">删除</th>
+		</tr>
+		<{section name=item loop=$materialCode}>
+		<tr <{if $sumCount[item] eq $sold[item]}> class="blue" title="此项完成" <{/if}>>
+			<td><{$materialCode[item]}></td>
+			<td><{$shipsClassification[item]}></td>
+			<td><{$material[item]}></td>
+			<td><{$thickness[item]}></td>
+			<td><{$width[item]}></td>
+			<td><{$length[item]}></td>
+			<td <{if $sumCount[item] lt 0 }>class="red"<{/if}> ><{$sumCount[item]}></td>
+			<td <{if $unRuku[item] lt 0 }>class="red" title="未入库的数量不能小于0"<{/if}> ><{$unRuku[item]}></td>
+			<td <{if $kuzhong[item] lt 0 }>
+				class="red" title="库中存货量不能小于0"
+				<{elseif $kuzhong[item] gt $sumCount[item]}>
+				class="red" title="库中存货量不能大于总量"
+				<{/if}> >
+			<{$kuzhong[item]}>
+			</td>
+			<td
+				<{if $sold[item] lt 0 }>
+					class="red"
+				<{elseif $sold[item] gt $sumCount[item]}>
+					class="red" title="销售量不能大于总量"
+				<{/if}> >
+			<{$sold[item]}>
+			</td>
+			<td>
+				<{$orderNumber[item]}>
+			</td>
+			<td>
+				<{$orderSubitemNumber[item]}>
+			</td>
+			<td><{$unitPrice[item]}></td>
+			<td><{$batchNumber[item]}></td>
+			<td><{$materialNumber[item]}></td>
+			<td><{$purchaseNumber[item]}></td>
+			<td><{$destination[item]}></td>
+			<td><{$storePlace[item]}></td>
+			<td><{$certificateNumber[item]}></td>
+			<td><{$checkoutBatch[item]}></td>
+			<td><{$consignmentBatch[item]}></td>
+			<td>
+				<a <{if $sumCount[item] eq $sold[item]}>style="color: white;"<{/if}> href="search.php?stype=chineseChars&materialCode=<{$materialCode[item]}>&orderNumber=<{$orderNumber[item]}>&orderSubitemNumber=<{$orderSubitemNumber[item]}>" target="_blank">详细</a>
+			</td>
+			<td>
+				<form action="deleteChineseChars.php" method="POST" onsubmit="return checkForDelete('<{$materialCode[item]}>')">
+				<input type="hidden" name="materialCode" value="<{$materialCode[item]}>" />
+				<input type="hidden" name="orderNumber" value="<{$orderNumber[item]}>" />
+				<input type="hidden" name="orderSubitemNumber" value="<{$orderSubitemNumber[item]}>" />
+				<input type='submit' value="删除" />
+				</form>
+			</td>
+			</tr>
+		<{/section}>
+		</table>
+	<{/if}>
+	</body>
+</html>

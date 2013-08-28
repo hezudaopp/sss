@@ -1,0 +1,452 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>查询结果</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear: both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+.green{
+	color:green;
+}
+
+.red{
+	color:red;
+}
+
+.redBgd{
+	background-color: red;
+	color: white;
+}
+
+.blue{
+	color:blue;
+}
+
+.sum th{
+	background-color:#8A95A1;
+	color:white;
+}
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+		</style>
+
+	<script type="text/javascript" language="Javascript">
+	function deleteConfirm(){
+		return window.confirm('你确实要删除这一项吗？');
+	}
+	</script>
+	</head>
+	<body>
+
+	<{if $inFache_materialCode or $outFache_materialCode or $fachuan_materialCode or $main_sequenceNumber or $directFache_materialCode}>
+		<{if $jiapian}>
+		<{elseif $chineseChars}>
+		<{else}>
+		<span class="exportBtn">
+			<{if $haveOrderNumber}>
+				<a href="exportMultipleTable.php?keyname=<{$keyname}>&orderNumber=<{$orderNumber}>&orderSubitemNumber=<{$orderSubitemNumber}>" title="点击进行导出结果">导出表格</a>
+			<{else}>
+				<a href="exportMultipleTable.php?keyname=<{$keyname}>" title="点击进行导出结果">导出表格</a>
+			<{/if}>
+		</span>
+		<{/if}>
+	<{else}>
+		抱歉没有符合你搜索的条目
+	<{/if}>
+
+
+	<table cellpadding="0" cellspacing="0">
+	<{if $main_sequenceNumber}>
+		<tr>
+			<th style="width:4em" rowspan="<{$planRowspan}>">总表</th>
+			<th style="width:10em">批次</th>
+			<th style="width:20em">材料代码</th>
+			<th style="width:10em">生产厂家</th>
+			<th style="width:5em">船级</th>
+			<th style="width:5em">材质</th>
+			<th style="width:6em">厚</th>
+			<th style="width:6em">宽</th>
+			<th style="width:6em">长</th>
+			<th style="width:3em">数量</th>
+			<th style="width:8em">单重</th>
+			<th style="width:8em">重量</th>
+			<th style="width:10em">备注</th>
+			<th style="width:10em">上传时间</th>
+			<th style="width:10em">上传文件</th>
+			<th style="width:10em">订单号</th>
+			<th style="width:5em">订单子项号</th>
+			<th style="width:6em">受订单价</th>
+			<th style="width:6em">批号</th>
+			<th style="width:6em">物料号</th>
+			<th style="width:6em">购单号</th>
+			<th style="width:6em">目的地</th>
+			<th style="width:6em">库存地</th>
+			<th style="width:6em">证书号</th>
+			<th style="width:6em">结算批号</th>
+			<th style="width:6em">发货批次</th>
+			<th style="width:5em">编辑</th>
+			<th style="width:5em">删除</th>
+		</tr>
+		<{section name=main loop=$main_sequenceNumber}>
+		<tr class="green">
+			<td><{$main_sequenceNumber[main]}></td>
+			<td><{$main_materialCode[main]}></td>
+			<td><{$main_manufactory[main]}></td>
+			<td><{$main_shipsClassification[main]}></td>
+			<td><{$main_material[main]}></td>
+			<td><{$main_thickness[main]}></td>
+			<td><{$main_width[main]}></td>
+			<td><{$main_length[main]}></td>
+			<td><{$main_count[main]}></td>
+			<td><{$main_unitWeight[main]}></td>
+			<td><{$main_weight[main]}></td>
+			<td><{$main_remark[main]}></td>
+			<td><{$main_uploadTime[main]}></td>
+			<td><{$main_filename[main]}></td>
+			<td><{$main_orderNumber[main]}></td>
+			<td><{$main_orderSubitemNumber[main]}></td>
+			<td><{$main_unitPrice[main]}></td>
+			<td><{$main_batchNumber[main]|truncate:15}></td>
+			<td><{$main_materialNumber[main]|truncate:15}></td>
+			<td><{$main_purchaseNumber[main]}></td>
+			<td><{$main_destination[main]}></td>
+			<td><{$main_storePlace[main]}></td>
+			<td><{$main_certificateNumber[main]}></td>
+			<td><{$main_checkoutBatch[main]}></td>
+			<td><{$main_consignmentBatch[main]}></td>
+			<td><a href="rowEdit.php?type=main&id=<{$main_id[main]}>" title="点击进入编辑页面" target="_blank" >编辑</a></td>
+			<td><form action="rowDelete.php" method="POST" onsubmit="return deleteConfirm()">
+				<input type="hidden" name="type" value="main" />
+				<input type="hidden" name="id" value="<{$main_id[main]}>" />
+				<input type="submit" value="删除" title="点击删除这一行" />
+				</form>
+			</td>
+		</tr>
+		<{/section}>
+		<tr class="sum">
+			<th>小结：</th>
+			<th colspan="3">总数量</th>
+			<td><{$planSumCount}></td>
+			<th colspan="3">总重量</th>
+			<td colspan="2"><{$planSumWeight}></td>
+		</tr>
+	<{/if}>
+
+	<{if $inFache_materialCode}>
+		<tr>
+			<th rowspan="<{$rukuRowspan}>">入库</th>
+			<th>日期</th>
+			<th>材料代码</th>
+			<th>车号/船号</th>
+			<th>船级</th>
+			<th>材质</th>
+			<th>厚</th>
+			<th>宽</th>
+			<th>长</th>
+			<th>数量</th>
+			<th>单重</th>
+			<th>重量</th>
+			<th>备注</th>
+			<th>上传时间</th>
+			<th>上传文件</th>
+			<th>订单号</th>
+			<th>订单子项号</th>
+			<th>受订单价</th>
+			<th>批号</th>
+			<th>物料号</th>
+			<th>购单号</th>
+			<th>目的地</th>
+			<th>库存地</th>
+			<th>证书号</th>
+			<th>结算批号</th>
+			<th>发货批次</th>
+			<th>阶段</th>
+			<th>编辑</th>
+			<th>删除</th>
+		</tr>
+		<{section name=inFache loop=$inFache_materialCode}>
+		<tr class="blue">
+			<td><{$inFache_facheDate[inFache]}></td>
+			<td><{$inFache_materialCode[inFache]}></td>
+			<td><{$inFache_facheNumber[inFache]}></td>
+			<td><{$inFache_shipsClassification[inFache]}></td>
+			<td><{$inFache_material[inFache]}></td>
+			<td><{$inFache_thickness[inFache]}></td>
+			<td><{$inFache_width[inFache]}></td>
+			<td><{$inFache_length[inFache]}></td>
+			<td><{$inFache_count[inFache]}></td>
+			<td><{$inFache_unitWeight[inFache]}></td>
+			<td><{$inFache_weight[inFache]}></td>
+			<td><{$inFache_remark[inFache]}></td>
+			<td><{$inFache_uploadTime[inFache]}></td>
+			<td><{$inFache_filename[inFache]}></td>
+			<td><{$inFache_orderNumber[inFache]}></td>
+			<td><{$inFache_orderSubitemNumber[inFache]}></td>
+			<td><{$inFache_unitPrice[inFache]}></td>
+			<td><{$inFache_batchNumber[inFache]|truncate:15}></td>
+			<td><{$inFache_materialNumber[inFache]|truncate:15}></td>
+			<td><{$inFache_purchaseNumber[inFache]}></td>
+			<td><{$inFache_destination[inFache]}></td>
+			<td><{$inFache_storePlace[inFache]}></td>
+			<td><{$inFache_certificateNumber[inFache]}></td>
+			<td><{$inFache_checkoutBatch[inFache]}></td>
+			<td><{$inFache_consignmentBatch[inFache]}></td>
+			<td><{$inFache_phase[inFache]}></td>
+			<td><a href="rowEdit.php?type=fache&id=<{$inFache_id[inFache]}>" title="点击进入编辑页面" target="_blank">编辑</a></td>
+			<td><form action="rowDelete.php" method="POST" onsubmit="return deleteConfirm()">
+				<input type="hidden" name="type" value="fache" />
+				<input type="hidden" name="id" value="<{$inFache_id[inFache]}>" />
+				<input type="submit" value="删除" title="点击删除这一行" />
+				</form>
+			</td>
+		</tr>
+		<{/section}>
+
+		<tr class="sum"
+			<{if $inSumCount lt $outSumCount}>
+				style="background-color:red; color=white" title="入库数小于出库数"
+			<{/if}> >
+			<th>小结：</th>
+			<th colspan="3">总数量</th>
+			<td><{$inSumCount}></td>
+			<th colspan="3">总重量</th>
+			<td colspan="2"><{$inSumWeight}></td>
+		</tr>
+	<{/if}>
+
+	<{if $outFache_materialCode or $fachuan_materialCode}>
+		<tr>
+			<th rowspan="<{$chukuRowspan}>">出库</th>
+			<th>日期</th>
+			<th>材料代码</th>
+			<th>车号/船号</th>
+			<th>船级</th>
+			<th>材质</th>
+			<th>厚</th>
+			<th>宽</th>
+			<th>长</th>
+			<th>数量</th>
+			<th>单重</th>
+			<th>重量</th>
+			<th>备注</th>
+			<th>上传时间</th>
+			<th>上传文件</th>
+			<th>订单号</th>
+			<th>订单子项号</th>
+			<th>受订单价</th>
+			<th>批号</th>
+			<th>物料号</th>
+			<th>购单号</th>
+			<th>目的地</th>
+			<th>库存地</th>
+			<th>证书号</th>
+			<th>结算批号</th>
+			<th>发货批次</th>
+			<th>阶段</th>
+			<th>编辑</th>
+			<th>删除</th>
+		</tr>
+
+		<{section name=outFache loop=$outFache_materialCode}>
+		<tr class="blue">
+			<td><{$outFache_facheDate[outFache]}></td>
+			<td><{$outFache_materialCode[outFache]}></td>
+			<td><{$outFache_facheNumber[outFache]}></td>
+			<td><{$outFache_shipsClassification[outFache]}></td>
+			<td><{$outFache_material[outFache]}></td>
+			<td><{$outFache_thickness[outFache]}></td>
+			<td><{$outFache_width[outFache]}></td>
+			<td><{$outFache_length[outFache]}></td>
+			<td><{$outFache_count[outFache]}></td>
+			<td><{$outFache_unitWeight[outFache]}></td>
+			<td><{$outFache_weight[outFache]}></td>
+			<td><{$outFache_remark[outFache]}></td>
+			<td><{$outFache_uploadTime[outFache]}></td>
+			<td><{$outFache_filename[outFache]}></td>
+			<td><{$outFache_orderNumber[outFache]}></td>
+			<td><{$outFache_orderSubitemNumber[outFache]}></td>
+			<td><{$outFache_unitPrice[outFache]}></td>
+			<td><{$outFache_batchNumber[outFache]|truncate:15}></td>
+			<td><{$outFache_materialNumber[outFache]|truncate:15}></td>
+			<td><{$outFache_purchaseNumber[outFache]}></td>
+			<td><{$outFache_destination[outFache]}></td>
+			<td><{$outFache_storePlace[outFache]}></td>
+			<td><{$outFache_certificateNumber[outFache]}></td>
+			<td><{$outFache_checkoutBatch[outFache]}></td>
+			<td><{$outFache_consignmentBatch[outFache]}></td>
+			<td><{$outFache_phase[outFache]}></td>
+			<td><a href="rowEdit.php?type=fache&id=<{$outFache_id[outFache]}>" title="点击进入编辑页面" target="_blank">编辑</a></td>
+			<td><form action="rowDelete.php" method="POST" onsubmit="return deleteConfirm()">
+				<input type="hidden" name="type" value="fache" />
+				<input type="hidden" name="id" value="<{$outFache_id[outFache]}>" />
+				<input type="submit" value="删除" title="点击删除这一行" />
+				</form>
+			</td>
+		</tr>
+		<{/section}>
+
+		<{section name=fachuan loop=$fachuan_materialCode}>
+		<tr class="red">
+			<td><{$fachuan_fachuanDate[fachuan]}></td>
+			<td><{$fachuan_materialCode[fachuan]}></td>
+			<td><{$fachuan_fachuanNumber[fachuan]}></td>
+			<td><{$fachuan_shipsClassification[fachuan]}></td>
+			<td><{$fachuan_material[fachuan]}></td>
+			<td><{$fachuan_thickness[fachuan]}></td>
+			<td><{$fachuan_width[fachuan]}></td>
+			<td><{$fachuan_length[fachuan]}></td>
+			<td><{$fachuan_count[fachuan]}></td>
+			<td><{$fachuan_unitWeight[fachuan]}></td>
+			<td><{$fachuan_weight[fachuan]}></td>
+			<td><{$fachuan_remark[fachuan]}></td>
+			<td><{$fachuan_uploadTime[fachuan]}></td>
+			<td><{$fachuan_filename[fachuan]}></td>
+			<td><{$fachuan_orderNumber[fachuan]}></td>
+			<td><{$fachuan_orderSubitemNumber[fachuan]}></td>
+			<td><{$fachuan_unitPrice[fachuan]}></td>
+			<td><{$fachuan_batchNumber[fachuan]|truncate:15}></td>
+			<td><{$fachuan_materialNumber[fachuan]|truncate:15}></td>
+			<td><{$fachuan_purchaseNumber[fachuan]}></td>
+			<td><{$fachuan_destination[fachuan]}></td>
+			<td><{$fachuan_storePlace[fachuan]}></td>
+			<td><{$fachuan_certificateNumber[fachuan]}></td>
+			<td><{$fachuan_checkoutBatch[fachuan]}></td>
+			<td><{$fachuan_consignmentBatch[fachuan]}></td>
+			<td>发船</td>
+			<td><a href="rowEdit.php?type=fachuan&id=<{$fachuan_id[fachuan]}>" title="点击进入编辑页面" target="_blank">编辑</a></td>
+			<td><form action="rowDelete.php" method="POST" onsubmit="return deleteConfirm()">
+				<input type="hidden" name="type" value="fachuan" />
+				<input type="hidden" name="id" value="<{$fachuan_id[fachuan]}>" />
+				<input type="submit" value="删除" title="点击删除这一行" />
+				</form>
+			</td>
+			<td></td>
+		</tr>
+		<{/section}>
+
+		<tr class="sum" <{if $inSumCount lt $outSumCount}>
+				style="background-color:red; color=white" title="入库数小于出库数"
+			<{/if}> >
+			<th>小结：</th>
+			<th colspan="3">总数量</th>
+			<td><{$outSumCount}></td>
+			<th colspan="3">总重量</th>
+			<td colspan="2"><{$outSumWeight}></td>
+		</tr>
+	<{/if}>
+
+
+	<{if $directFache_materialCode}>
+		<tr>
+			<th rowspan="<{$directRowspan}>">销售</th>
+			<th>日期</th>
+			<th>材料代码</th>
+			<th>车号/船号</th>
+			<th>船级</th>
+			<th>材质</th>
+			<th>厚</th>
+			<th>宽</th>
+			<th>长</th>
+			<th>数量</th>
+			<th>单重</th>
+			<th>重量</th>
+			<th>备注</th>
+			<th>上传时间</th>
+			<th>上传文件</th>
+			<th>订单号</th>
+			<th>订单子项号</th>
+			<th>受订单价</th>
+			<th>批号</th>
+			<th>物料号</th>
+			<th>购单号</th>
+			<th>目的地</th>
+			<th>库存地</th>
+			<th>证书号</th>
+			<th>结算批号</th>
+			<th>发货批次</th>
+			<th>阶段</th>
+			<th>编辑</th>
+			<th>删除</th>
+		</tr>
+
+		<{section name=directFache loop=$directFache_materialCode}>
+		<tr class="blue">
+			<td><{$directFache_facheDate[directFache]}></td>
+			<td><{$directFache_materialCode[directFache]}></td>
+			<td><{$directFache_facheNumber[directFache]}></td>
+			<td><{$directFache_shipsClassification[directFache]}></td>
+			<td><{$directFache_material[directFache]}></td>
+			<td><{$directFache_thickness[directFache]}></td>
+			<td><{$directFache_width[directFache]}></td>
+			<td><{$directFache_length[directFache]}></td>
+			<td><{$directFache_count[directFache]}></td>
+			<td><{$directFache_unitWeight[directFache]}></td>
+			<td><{$directFache_weight[directFache]}></td>
+			<td><{$directFache_remark[directFache]}></td>
+			<td><{$directFache_uploadTime[directFache]}></td>
+			<td><{$directFache_filename[directFache]}></td>
+			<td><{$directFache_orderNumber[directFache]}></td>
+			<td><{$directFache_orderSubitemNumber[directFache]}></td>
+			<td><{$directFache_unitPrice[directFache]}></td>
+			<td><{$directFache_batchNumber[directFache]}></td>
+			<td><{$directFache_materialNumber[directFache]}></td>
+			<td><{$directFache_purchaseNumber[directFache]}></td>
+			<td><{$directFache_destination[directFache]}></td>
+			<td><{$directFache_storePlace[directFache]}></td>
+			<td><{$directFache_certificateNumber[directFache]}></td>
+			<td><{$directFache_checkoutBatch[directFache]}></td>
+			<td><{$directFache_consignmentBatch[directFache]}></td>
+			<td><{$directFache_phase[directFache]}></td>
+			<td><a href="rowEdit.php?type=fache&id=<{$directFache_id[directFache]}>" title="点击进入编辑页面" target="_blank">编辑</a></td>
+			<td><form action="rowDelete.php" method="POST" onsubmit="return deleteConfirm()">
+				<input type="hidden" name="type" value="fache" />
+				<input type="hidden" name="id" value="<{$directFache_id[directFache]}>" />
+				<input type="submit" value="删除" title="点击删除这一行" />
+				</form>
+			</td>
+			<td></td>
+		</tr>
+		<{/section}>
+
+		<tr class="sum">
+			<th>小结：</th>
+			<th colspan="3">总数量</th>
+			<td><{$directSumCount}></td>
+			<th colspan="3">总重量</th>
+			<td colspan="2"><{$directSumWeight}></td>
+		</tr>
+	<{/if}>
+
+	</table>
+	</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>高级搜索</title>
+		<link type="text/css" rel="stylesheet" href="../css/default.css" />
+		<style>
+.comment{
+color:#8A95A1;
+font-weight:bold;
+font-style: italic;
+}
+	</style>
+	<script type="text/javascript" language="javascript">  
+    function dosubmit1(obj){  
+              /*obj.target="searchForm";  */
+              obj.action="advancedSearch.php";  
+              obj.submit();  
+    }
+    function dosubmit2(obj){  
+              /*obj.target="searchForm";//第二提交页面,可以为第一页面相同点*/
+              obj.action="advancedSearchStat.php";//第二提交页面  
+              obj.submit();  
+    }  
+  </script>
+	</head>
+	<body>
+		<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1; text-align:left;">
+			<span><a href="excelUpload.html">表格上传</a></span>
+			<span><a href="index.html">主页</a></span>
+		</div>
+
+		<table width="100%">
+			<tr valign="bottom">
+			<td width="25%">
+				<img id="logo" src="../img/SSS(small).png" height="80" align="left" />
+			</td>
+			<td>
+				<div id="shoulder">
+				<b style="font-size:16px;">高级搜索</b>
+				</div>
+			</td>
+			</tr>
+		</table>
+
+
+		<form name="searchForm" method="GET" style="line-height:2em" id="advSearchForm">
+		<table width="100%" cellpadding="0" cellspacing="0" align="left">
+			<tr style="background-color:#cbdced;">
+				<td width="20%"><label for="materialCode">材料代码：</label></td>
+				<td><input type="text" name="materialCode" maxlength="32" size="32" onKeyDown="if(event.keyCode==13) searchBtn.click()" /><span class='comment'>(模糊查询：如果输入'nx',材料代码里包含这个字符的所有项目都满足这个查询条件)</span></td>
+			</tr>
+			<tr style="background-color:#cbdced;" valign="top">
+				<td><label>尺寸： </label></td>
+				<td><label for="thickness">厚：</label><input type="text" name="thicknessFrom" maxlength="10" size=10 /> 到 <input type="text" name="thicknessTo" maxlength="10" size=10 onKeyDown="if(event.keyCode==13) searchBtn.click()"/><br />
+				<label for="width">宽：</label><input type="text" name="widthFrom" maxlength="10" size="10" /> 到 <input type="text" name="widthTo" maxlength="10" size="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><br />
+				<label for="length">长：</label><input type="text" name="lengthFrom" maxlength="10" size="10" /> 到 <input type="text" name="lengthTo" maxlength="10" size="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">（一定要填写数字）</span></td>
+			</tr>
+			<tr valign="top">
+				<td><label>发车/发船日期：</label></td>
+				<td>从<input type="text" name="faDateFrom" maxlength="10" /> 到
+			<input type="text" name="faDateTo" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><br />
+			<span class="comment">(日期格式为： YYYY/MM/DD,比如要表达2007年8月1日，输入2007/08/01)</span></td>
+			</tr>
+			<tr>
+				<td><label>车号/船号</label></td>
+				<td><input type="text" name="faNumber" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/>
+				<span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr>
+				<td><label for="shipsClassification">船级：</label></td>
+				<td><input type="text" name="shipsClassification" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确查询)</span></td>
+			</tr>
+
+			<tr>
+				<td><label for="material">材质：</label></td>
+				<td><input type="text" name="material" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确查询)</span></td>
+			</tr>
+
+			<tr valign="top">
+				<td><label>文件上传日期：</label></td>
+				<td>从<input type="text" name="uploadTimeFrom" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/> 到
+			<input type="text" name="uploadTimeTo" maxlength="20" /><br />
+			<span class="comment">(日期格式： YYYY/MM/DD HH:MM:SS，比如要表达2008年1月1日下午7点5分20秒，输入：2008/01/01 19:05:20)</span>
+				</td>
+			</tr>
+			<tr>
+				<td><label for="filename">上传文件名：</label></td>
+				<td><input type="text" name="filename" maxlength="200" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+
+			<tr>
+				<td><label for="orderNumber">订单号：</label></td>
+				<td><input type="text" name="orderNumber" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr>
+				<td><label for="orderSubitemNumber">订单子项号：</label></td>
+				<td><input type="text" name="orderSubitemNumber" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="unitPrice">价格：</label></td>
+				<td><input type="text" name="unitPrice" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确搜索:一定要是数字)</span></td>
+			</tr>
+			<tr>
+				<td><label for="batchNumber">批号：</label></td>
+				<td><input type="text" name="batchNumber" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="materialNumber">物料号：</label></td>
+				<td><input type="text" name="materialNumber" maxlength="255" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr>
+				<td><label for="purchaseNumber">购单号：</label></td>
+				<td><input type="text" name="purchaseNumber" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="destination">目的地：</label></td>
+				<td><input type="text" name="destination" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="storePlace">库存地：</label></td>
+				<td><input type="text" name="storePlace" maxlength="20" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用精确搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="sequenceNumber">批次：</label></td>
+				<td><input type="text" name="sequenceNumber" maxlength="40" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="manufactory">生产厂家：</label></td>
+				<td><input type="text" name="manufactory" maxlength="50" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊搜索)</span></td>
+			</tr>
+			<tr>
+				<td><label for="remark">备注关键字：</label></td>
+				<td><input type="text" name="remark" maxlength="255" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>	
+			<tr>
+				<td><label for="certificateNumber">证书号：</label></td>
+				<td><input type="text" name="certificateNumber" maxlength="255" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr>
+				<td><label for="checkoutBatch">结算批号：</label></td>
+				<td><input type="text" name="checkoutBatch" maxlength="255" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr>
+				<td><label for="consignmentBatch">发货批次：</label></td>
+				<td><input type="text" name="consignmentBatch" maxlength="255" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(采用模糊查询)</span></td>
+			</tr>
+			<tr valign="top">
+				<td><label>年份：</label></td>
+				<td><input type="text" name="year" maxlength="10" onKeyDown="if(event.keyCode==13) searchBtn.click()"/><span class="comment">(年份格式为YYYY 如：2009)</span><br />
+			</td>
+			</tr>
+			<tr valign="bottom" align="left">
+				<td></td>
+				<td>
+				<input type="checkbox" name="main" value="总表" checked="checked"/>总表
+				<input type="checkbox" name="ruku" value="入库" checked="checked"/>入库
+				<input type="checkbox" name="chuku" value="出库" checked="checked"/>出库
+				<input type="checkbox" name="sale" value="销售" checked="checked"/>销售
+				<input type="checkbox" name="checkout" value="已结算"/>已结算
+				</td>
+			</tr>
+		</table>
+		<br>
+		<input type="submit" value="搜索" name="searchBtn" style="clear:left; padding:3px 6px 3px 6px;" onclick="dosubmit1(this.form)"/>
+		<input type="submit" value="以物流形式显示" style="clear:left; padding:3px 6px 3px 6px;" onclick="dosubmit2(this.form)"/>  
+		</form>
+	</body>
+</html>

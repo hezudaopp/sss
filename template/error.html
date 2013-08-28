@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $errTitle}><{$errTitle}><{else}>上传失败<{/if}></title>
+</head>
+<body style="margin: 0 auto; width: 760px; text-align: center;">
+<div
+	style="font-size: 14px; border: #bbb 1px solid; margin-top: 20px; text-align: left; background-color: #eee; padding: 10px; font-family: arial; float: left;">
+<h1 style="text-align: left"><{if
+$errTitle}><{$errTitle}><{else}>上传失败<{/if}></h1>
+<hr />
+
+<p style="color: red; line-height: 1.5em;"><{if
+$errTitle}><{else}>出现错误导致上传失败，请按照下面提示修改后重新上传：<br />
+<{/if}> <{$errMsg}></p>
+
+<div style="float: right; font-size: 16px;"><a href="index.html">回到主页</a><br />
+<{if $errorType == 'monitorUpload'}> <a href="monitorAdd.html">回到监控上传页面</a>
+<{elseif $errorType == 'monitorDelete' or $errorType ==
+'deleteInMonitor' }> <a href="monitors.php">回到监控页面</a>
+<{elseif $errorType == 'listDelete' or $errorType == 'deleteInList' }> <a href="checkoutList.php">回到结算清单页面</a>
+<{elseif $errorType == 'listUpload' }> <a href="checkoutList.php">回到结算清单页面</a>
+<{elseif $errorType == 'consignmentDelete' or $errorType == 'deleteInConsignment' }> <a href="consignments.php">回到发货批次页面</a>
+<{elseif $errorType == 'consignmentUpload' }> <a href="consignments.php">回到发货批次页面</a> 
+<{else}> 
+<a href="excelUpload.html">回到上传页面</a> <{/if}>
+</div>
+<div style="clear: both;"></div>
+</div>
+
+</body>
+</html>

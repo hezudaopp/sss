@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查询结果</title>
+<style>
+td {
+	border-right: 1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding: 3px;
+}
+
+th {
+	background-color: #cbdced;
+	padding: 3px;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+table {
+	clear: both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+
+body {
+	font-size: 14px;
+}
+
+.green {
+	color: green;
+}
+
+.red {
+	background-color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+.exportBtn {
+	margin-right: 30px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	float: right;
+	display: block;
+	padding: 1px;
+}
+
+span[class=exportBtn]:hover {
+	background-color: #8A95A1;
+	color: white;
+}
+</style>
+<script type="text/javascript">
+		function allChecksChange(obj){
+			checks = document.getElementsByTagName("input");
+			for(i = 0; i < checks.length; i++){
+				o = checks[i];
+				type = o.attributes.getNamedItem("type");
+				if(type.nodeValue == 'checkbox'){
+					o.checked = obj.checked;
+				}
+			}
+			//checks.checked = obj.checked;
+		}
+		
+		function deleteConfirm(){
+		return window.confirm('你确实要删除选中的这些记录吗？');
+		}
+		</script>
+</head>
+<body>
+<div id="sbar"
+	style="width: 100%; padding: 0px 0px 4px 0px; border-bottom: 1px solid #c9d7f1;">
+<span><a href="excelUpload.html">表格上传</a></span> | <span><a
+	href="index.html">主页</a></span> | <span><a href="checkoutInput.php">回结算查询页面</a></span>
+</div>
+<{if $chukuDate}>
+<span class="exportBtn">
+			<a href="exportCheckoutTable.php?fromDate=<{$fromDate}>&toDate=<{$toDate}>&type=<{$type}>" title="点击进行导出结果">导出表格</a>
+</span >
+<{else}> 抱歉没有符合你搜索的条目 <{/if}>
+
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<th style="width: 11em">日期</th>
+		<th style="width: 5em">车号/船号</th>
+		<th style="width: 10em">材料代码</th>
+		<th style="width: 5em">船级</th>
+		<th style="width: 5em">材质</th>
+		<th style="width: 4em">厚</th>
+		<th style="width: 4em">宽</th>
+		<th style="width: 4em">长</th>
+		<th style="width: 3em">数量</th>
+		<th style="width: 4em">单重</th>
+		<th style="width: 4em">重量</th>
+		<th style="width: 6em">订单号</th>
+		<th style="width: 6em">订单子项号</th>
+		<th style="width: 6em">受订单价</th>
+		<th style="width: 6em">购单号</th>
+		<th style="width: 6em">批号</th>
+		<th style="width: 6em">物料号</th>
+		<th style="width: 6em">发货批次</th>
+		<th style="width: 6em">库存地</th>
+		<th style="width: 6em">目的地</th>
+		<th style="width: 6em">结算批号</th>
+		<th style="width: 6em">证书号</th>
+		<th style="width: 6em">文件名</th>
+		<th style="width: 12em">备注</th>
+		
+	</tr>
+
+	<{section name=time loop=$chukuNumber}>
+	<tr class="green">
+		<td><{$chukuDate[time]}></td>
+		<td><{$chukuNumber[time]}></td>
+		<td><{$materialCode[time]}></td>
+		<td><{$ships[time]}></td>
+		<td><{$material[time]}></td>
+		<td><{$thickness[time]}></td>
+		<td><{$width[time]}></td>
+		<td><{$length[time]}></td>
+		<td><{$count[time]}></td>
+		<td><{$unitWeight[time]}></td>
+		<td><{$weight[time]}></td>
+		<td><{$orderNumber[time]}></td>
+		<td><{$orderSubitemNumber[time]}></td>
+		<td><{$unitPrice[time]}></td>
+		<td><{$purchaseNumber[time]}></td>
+		<td><{$batchNumber[time]}></td>
+		<td><{$materialNumber[time]}></td>
+		<td><{$consignmentBatch[time]}></td>
+		<td><{$storePlace[time]}></td>
+		<td><{$destination[time]}></td>
+		<td><{$checkoutBatch[time]}></td>
+		<td><{$certificateNumber[time]}></td>
+		<td><{$filename[time]}></td>
+		<td><{$remark[time]}></td>
+			</tr>
+	<{/section}>
+
+</table>
+</body>
+</html>

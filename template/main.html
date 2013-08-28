@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>查询结果</title>
+		<link type="text/css" rel="stylesheet" href="../css/default.css" />
+		<script type="text/javascript" language="Javascript">
+
+        function getWinHeight() //函数：获取尺寸
+        {
+        	var winHeight = 0;
+             /*//获取窗口高度
+             if (window.innerHeight)
+                   winHeight = window.innerHeight;
+             else if ((document.body) && (document.body.clientHeight))
+                   winHeight = document.body.clientHeight;*/
+            //通过深入Document内部对body进行检测，获取窗口大小
+             if (document.documentElement  && document.documentElement.clientHeight &&
+                                                  document.documentElement.clientWidth)
+             {
+                 winHeight = document.documentElement.clientHeight;
+             }
+			return winHeight;
+        }
+
+        function iframeReheight(){
+        	var winHeight = getWinHeight();
+        	var iframe = document.getElementById('searchResult');
+        	var iframeHeight = winHeight - 180;
+        	var heightAttr = iframeHeight + "px";
+        	iframe.setAttribute('height', heightAttr);
+        }
+
+        window.onload = iframeReheight;
+		window.onresize = iframeReheight;
+		</script>
+	</head>
+	<body style="text-align:left;">
+		<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1;">
+			<span style="float:right;">状态导出：<a href="exportWeidongTable.php">未动</a>
+			 | <a href="exportKuzhongTable.php">库中</a>
+			 | <a href="exportUnfinishedTable.php">未完成</a>
+			 | <a href="exportCheckoutTable.php?type=unsettled">完成未结算</a>
+			 | <a href="exportCheckoutTable.php?type=settled">完成已结算</a></span>
+			<span><a href="excelUpload.html">表格上传</a></span>
+			| <span><a href="index.html">回到首页</a></span>
+		</div>
+
+		<div id="searchArea">
+			<a href="index.html" title="回到首页" style="border:none"><img id="logo" src="../img/SSS(small).png" height="80px;" style="border:none;" align="left" /></a>
+			<div>
+			<br />
+			<form action="search.php" method="GET">
+			<input type="text" autocomplete="off" maxlength=2048 id="keyname" name="keyname" size=45 title="输入要查询的关键字" value="<{$keyname}>" style="padding:3px;">
+			<input name=btnS type=submit value="SSS 查询" style="padding:3px 5px 3px 5px; margin:3px;" />
+			<a href="advancedSearch.html">高级搜索</a>
+			| <a href="search.php?stype=filestat&keyname=物流状况">物流状况</a>
+	 		| <a href="search.php?stype=jiapian">加片</a>
+	 		| <a href="search.php?stype=biangang">扁钢/舾装</a>
+			| <a href="search.php?stype=chineseChars">汉字材料代码</a>
+			| <a href="summary.php">汇总表格生成</a>
+			
+			<br />
+								<input type="radio" value="materialCode" name="stype" <{if $materialCodeCheck}>checked<{/if}> />
+								<label for="stype">按材料代码</label>
+<!--
+								<input type="radio" value="faNumber" name="stype" <{if $faNumberCheck}>checked<{/if}> />
+								<label for="stype">按车号/船号</label>
+
+								<input type="radio" value="shipsClassification" name="stype" <{if $shipsClassificationCheck}>checked<{/if}> />
+								<label for="stype">按船级</label>
+
+								<input type="radio" value="material" name="stype" <{if $materialCheck}>checked<{/if}> />
+								<label for="stype">按材质</label>
+
+								<input type="radio" value="size" name="stype" <{if $sizeCheck}>checked<{/if}> />
+								<label for="stype">按尺寸</label>
+
+								<input type="radio" value="faDate" name="stype" <{if $faDateCheck}>checked<{/if}> />
+								<label for="stype">按发车/发船时间</label>
+
+								<input type="radio" value="uploadTime" name="stype" <{if $uploadTimeCheck}>checked<{/if}> />
+								<label for="stype">按上传时间</label>
+-->
+								<input type="radio" value="filename" name="stype" <{if $filenameCheck}>checked<{/if}> />
+								<label for="stype">按上传文件名</label>
+			</form>
+			</div>
+		</div>
+		<div id="shoulder">
+		<span class="pageComment" style="display:none">
+			约有<{$rowNumber}>项，当前是<{$start}>-<{$end}>项
+		</span>
+		<{$searchType}>
+		</div>
+
+		<!-- begin the table -->
+		<iframe scrolling="auto" id="searchResult" style="margin:auto; width:98%; border:3px #cbdced solid; margin-top:20px;" src=
+		"<{if $simple}>
+		simpleTable.php?stype=<{$stype}>&keyname=<{$keyname}>
+		<{elseif $filestat}>
+		fileStatSearch.php
+		<{elseif $jiapianStats}>
+		jiapianStats.php
+		<{elseif $jiapianDetail}>
+		jiapianStats.php?orderNumber=<{$orderNumber}>&orderSubitemNumber=<{$orderSubitemNumber}>
+		<{elseif $biangangStats}>
+		biangangStats.php
+		<{elseif $chineseCharsStats}>
+		chineseCharsStats.php
+		<{elseif $chineseCharsDetail}>
+		chineseCharsStats.php?materialCode=<{$materialCode}>&orderNumber=<{$orderNumber}>&orderSubitemNumber=<{$orderSubitemNumber}>
+		<{elseif $haveOrderNumber}>
+		multipleTable.php?stype=<{$stype}>&keyname=<{$keyname}>&orderNumber=<{$orderNumber}>&orderSubitemNumber=<{$orderSubitemNumber}>
+		<{else}>
+		multipleTable.php?stype=<{$stype}>&keyname=<{$keyname}>
+		<{/if}>">
+		</iframe>
+	</body>
+</html>

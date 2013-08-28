@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>程序安装</title>
+	</head>
+	<body style="margin:0 auto; width:760px; text-align:center;">
+		<div style="font-size:14px; 
+			border:#bbb 1px solid;
+		   	margin-top:20px;
+		   	text-align:left;
+		 	background-color:#eee;
+			padding:10px;
+			font-family:arial">
+<?php
+
+require('../includes/MainTableInstall.class.php');
+require('../includes/FacheTableInstall.php');
+require('../includes/FachuanTableInstall.php');
+
+
+$username = "root";
+$password = "hushichao";
+$hostname = "localhost";
+$port = null;
+
+$db = @mysqli_connect($hostname, $username, $password, null, $port);
+if(mysqli_connect_errno()){
+	echo(new DBConnectException());
+}
+
+
+$query = 'drop database if exists `sss`;';
+@$db->query($query);
+if(mysqli_errno($db)){
+	throw new DBQueryException($query);
+}
+
+$query = 'create database `sss`;';
+@$db->query($query);
+if(mysqli_errno($db)){
+	throw new DBQueryException($query);
+}
+
+
+$query = "grant select, insert, delete, update, alter, create, index, drop on `sss`.*
+to admin identified by 'synchronizer';";
+@$db->query($query);
+if(mysqli_errno($db)){
+	throw new DBQueryException($query);
+}
+
+echo '数据库创建成功<br />';
+echo '开始创建用表...<br />';
+new MainTableInstall();
+new FacheTableInstall();
+new FachuanTableInstall();
+echo '数据库安装成功，您可以正常运行程序了';
+
+?>
+		 </div>
+		 
+	</body>
+</html>

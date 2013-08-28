@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>上传汇总文件-SSS: Spread Sheet Synchronizer</title>
+		<link type="text/css" rel="stylesheet" href="../css/default.css" />
+<!--		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-all.css" />
+		<link type="text/css" rel="stylesheet" href="../ext2.0/resources/css/ext-patch.css" />
+		
+	
+		<script type="text/javascript" src="../ext2.0/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ext2.0/ext-all-debug.js"></script>
+		<script type="text/javascript" src="../ext2.0/source/locale/ext-lang-zh_CN.js"></script>
+-->
+		<script type="text/javascript">
+		//Ext.BLANK_IMAGE_URL = "../ext2.0/resources/images/default/s.gif";
+		
+		function get_nonblank(id) {
+          var entry = document.getElementById(id).value;
+          return entry.replace(/^\s+$/,""); //remove whitespace
+        }
+		
+        function check_summaryUploadFields() {
+          var file = get_nonblank("summaryUpload");
+          if (file == "") {
+            alert("请选择要上传的文件.");
+            return false;
+          }
+          return true;
+        }
+		
+		</script>
+	</head>
+	
+	<body>
+	<div class="wrapper">
+		<h1>SSS-上传汇总文件</h1><hr />
+		<div class="links">
+		<table style="width:100%;">
+		<tr>
+		<td>
+		<form action="summaryUpload.php" method="post" enctype="multipart/form-data" onsubmit="return check_summaryUploadFields();">
+		<label for="summaryUpload">上传汇总文件：</label><br />
+		<input name="summaryFile"  id="summaryFile" size="38" style="width: 90%;" type="file" /><br />
+		添加汇总描述：(最多250个汉字)<br />
+		<textarea cols="50" rows="3" style="margin:5px;" name="record"></textarea><br />
+		
+		<input type="submit" value=" 上传 " />
+		</form>
+</td></tr>
+		</table>
+		</div>
+		<div>
+		<a style="color:white; display:block; float:right; background-color:blue" href="summaries.php">-->回汇总页面</a><br />
+		<a style="color:white; display:block; float:right; background-color:blue" href="index.html" title="回到首页">-->回主页</a>
+		</div>
+		
+		<div style="clear:both"></div>
+	</div>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查询结果</title>
+<style>
+td {
+	border-right: 1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding: 3px;
+}
+
+th {
+	background-color: #cbdced;
+	padding: 3px;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+table {
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+
+body {
+	font-size: 14px;
+}
+
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+.sum th {
+	background-color: #8A95A1;
+	color: white;
+}
+</style>
+
+<script type="text/javascript" language="Javascript">
+	function deleteConfirm(){
+		return window.confirm('你确实要删除这个文件中所有信息吗？');
+	}
+	</script>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<th style="width: 15em">上传文件</th>
+		<th style="width: 15em">上传时间</th>
+		<th style="width: 10em">条目总数</th>
+		<th style="width: 5em">详细</th>
+		<th style="width: 5em">删除</th>
+	</tr>
+
+	<{section name=main loop=$main_filename}>
+	<tr class="green">
+		<td><{$main_filename[main]}></td>
+		<td><{$main_uploadTime[main]}></td>
+		<td><{$main_count[main]}></td>
+		<td><a href="search.php?stype=filename&keyname=<{$main_filename[main]}>"
+		title="点击查看文件中的条目" target="_blank" >详细</a></td>
+		<td>
+		<form action="onlyFileDelete.php" method="POST"
+			onsubmit="return deleteConfirm()"><input type="hidden"
+			name="type" value="main" /> <input type="hidden" name="filename"
+			value="<{$main_filename[main]}>" /> <input type="hidden"
+			name="uploadTime" value="<{$main_uploadTime[main]}>" /> <input
+			type="submit" value="删除" title="点击删除这个文件" /></form>
+		</td>
+	</tr>
+	<{/section}> <{section name=fache loop=$fache_filename}>
+	<tr class="blue">
+		<td><{$fache_filename[fache]}></td>
+		<td><{$fache_uploadTime[fache]}></td>
+		<td><{$fache_count[fache]}></td>
+		<td><a href="search.php?stype=filename&keyname=<{$fache_filename[fache]}>"
+		title="点击查看文件中的条目" target="_blank" >详细</a></td>
+		<td>
+		<form action="onlyFileDelete.php" method="POST"
+			onsubmit="return deleteConfirm()"><input type="hidden"
+			name="type" value="fache" /> <input type="hidden" name="filename"
+			value="<{$fache_filename[fache]}>" /> <input type="hidden"
+			name="uploadTime" value="<{$fache_uploadTime[fache]}>" /> <input
+			type="submit" value="删除" title="点击删除这个文件" /></form>
+		</td>
+	</tr>
+	<{/section}> <{section name=fachuan loop=$fachuan_filename}>
+	<tr class="red">
+		<td><{$fachuan_filename[fachuan]}></td>
+		<td><{$fachuan_uploadTime[fachuan]}></td>
+		<td><{$fachuan_count[fachuan]}></td>
+		<td><a href="search.php?stype=filename&keyname=<{$fachuan_filename[fachuan]}>"
+		title="点击查看文件中的条目" target="_blank" >详细</a></td>
+		<td>
+		<form action="onlyFileDelete.php" method="POST"
+			onsubmit="return deleteConfirm()"><input type="hidden"
+			name="type" value="fachuan" /> <input type="hidden" name="filename"
+			value="<{$fachuan_filename[fachuan]}>" /> <input
+			type="hidden" name="uploadTime" value="<{$fachuan_uploadTime[fachuan]}>"
+		/> <input type="submit" value="删除" title="点击删除这个文件" /></form>
+		</td>
+	</tr>
+	<{/section}>
+
+</table>
+</body>
+</html>

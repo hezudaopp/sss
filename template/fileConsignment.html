@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>批量查询结果</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear:both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+
+.red{
+	color:white;
+	background-color: red;
+}
+
+.green{
+	color:white;
+	background-color: green;
+}
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+
+.lightGreen{
+	color:black;
+	background-color: #cbdced;
+}
+.yellow{
+	color: black;
+	background-color: yellow;
+}
+
+		</style>
+		<script type="text/javascript">	
+			function deleteConfirm(){
+				return window.confirm('你确实要删除这些发货批次条目吗？');
+			}
+		
+		</script>
+	</head>
+	<body>
+	<{if $batchSearch}>
+	<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1;">
+			<span><a href="excelUpload.html">表格上传</a></span>
+			| <span><a href="index.html">主页</a></span>
+			| <span><a href="batchSearch.html">回到批量查询页面</a></span>
+	</div>
+	<{/if}>
+	
+	<{if $materialCode}>
+		<span class="exportBtn">
+				<a href="exportFileConsignmentTable.php?id=<{$id}>" title="点击进行导出结果">导出表格</a>
+		</span>
+	
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th style="width:8em">材料代码</th>
+			<th style="width:5em">船号</th>
+			<th style="width:6em">分段号</th>
+			<th style="width:6em">订单号</th>
+			<th style="width:8em">订单子项号</th>
+			<th style="width:7em">购单号</th>
+			<th style="width:7em">物料号</th>
+			<th style="width:8em">发货批次</th>
+			<th style="width:8em">备注</th>
+		</tr>
+		
+		<{section name=main loop=$materialCode}>
+		<tr>
+			<td><a href="multipleTable.php?keyname=<{$materialCode[main]}>&orderNumber=<{$orderNumber[main]}>&orderSubitemNumber=<{$orderSubitemNumber[main]}>">
+			<{$materialCode[main]}></a></td>
+			<td><{$shipNumber[main]}></td>
+			<td><{$subsectionNumber[main]}></td>
+			<td><{$orderNumber[main]}></td>
+			<td><{$orderSubitemNumber[main]}></td>
+			<td><{$purchaseNumber[main]}></td>
+			<td><{$materialNumber[main]|truncate:15}></td>
+			<td><{$consignmentBatch[main]|truncate:15}></td>
+			<td><{$remark[main]}></td>
+		</tr>
+		<{/section}>
+
+	</table>
+	
+	<{else}>
+		抱歉没有符合你搜索的条目
+	<{/if}>
+	
+	</body>
+</html>

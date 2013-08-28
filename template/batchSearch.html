@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>批量查询结果</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear:both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+.green{
+	color:green;
+}
+
+.red{
+	color:white;
+	background-color: red;
+}
+
+.blue{
+	color:white;
+	background-color: blue;
+}
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+		</style>
+	</head>
+	<body>
+	<{if $batchSearch}>
+	<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1;">
+			<span><a href="excelUpload.html">表格上传</a></span>
+			| <span><a href="index.html">主页</a></span>
+			| <span><a href="batchSearch.html">回到批量查询页面</a></span>
+	</div>
+	<{/if}>
+	
+	<{if $fache_materialCode or $fachuan_materialCode or $main_sequenceNumber}>
+		<span class="exportBtn">
+				<a href="batchSearchExport.php">全部删除</a>
+		</span>
+		<span class="exportBtn">
+				<a href="exportSimpleTable.php?stype=<{$stype}>&keyname=<{$keyname}>" title="点击进行导出结果">导出表格</a>
+		</span>
+	<{else}>
+		抱歉没有符合你搜索的条目
+	<{/if}>
+	
+	<table cellpadding="0" cellspacing="0">
+		<{if $main_sequenceNumber}>
+		<tr>
+			<th style="width:14em">材料代码</th>
+			<th style="width:5em">船级</th>
+			<th style="width:5em">材质</th>
+			<th style="width:6em">厚</th>
+			<th style="width:6em">宽</th>
+			<th style="width:6em">长</th>
+			<th style="width:6em">类别</th>
+			<th style="width:10em">厂家/车船号</th>
+			<th style="width:10em">批次</th>
+			<th style="width:3em">数量</th>
+			<th style="width:8em">单重</th>
+			<th style="width:8em">重量</th>
+			<th style="width:8em">备注</th>
+			<th style="width:8em">上传时间</th>
+			<th style="width:8em">上传文件</th>
+			<th style="width:10em">订单号</th>
+			<th style="width:5em">订单子项号</th>
+		</tr>
+		
+		<{section name=main loop=$main_sequenceNumber}>
+		<tr <{if $colors[main] eq 'blue' }>class="blue" title="全部完成"<{elseif $colors[main] eq 'red'}>class="red" title="出现错误"<{/if}> >
+			<td><{$main_materialCode[main]}></td>
+			<td><{$main_manufactory[main]}></td>
+			<td><{$main_material[main]}></td>
+			<td><{$main_thickness[main]}></td>
+			<td><{$main_width[main]}></td>
+			<td><{$main_length[main]}></td>
+			<td><{$type[main]}></td>
+			<td><{$main_shipsClassification[main]}></td>
+			<td><{$main_sequenceNumber[main]}></td>
+			<td><{$main_count[main]}></td>
+			<td><{$main_unitWeight[main]}></td>
+			<td><{$main_weight[main]}></td>
+			<td><{$main_remark[main]}></td>
+			<td><{$main_uploadTime[main]}></td>
+			<td><{$main_filename[main]}></td>
+			<td><{$main_orderNumber[main]}></td>
+			<td><{$main_orderSubitemNumber[main]}></td>
+		</tr>
+		<{/section}>
+		<{/if}>
+		
+		<{if $fache_materialCode or $fachuan_materialCode}>
+		<tr>
+			<th>日期</th>
+			<th>材料代码</th>
+			<th>车号/船号</th>
+			<th>船级</th>
+			<th>材质</th>
+			<th>厚</th>
+			<th>宽</th>
+			<th>长</th>
+			<th>数量</th>
+			<th>单重</th>
+			<th>重量</th>
+			<th>备注</th>
+			<th>上传时间</th>
+			<th>上传文件</th>
+			<th>阶段</th>
+			<th></th>
+		</tr>
+		<{section name=fache loop=$fache_materialCode}>
+		<tr class="blue">
+			<td><{$fache_facheDate[fache]}></td>
+			<td><{$fache_materialCode[fache]}></td>
+			<td><{$fache_facheNumber[fache]}></td>
+			<td><{$fache_shipsClassification[fache]}></td>
+			<td><{$fache_material[fache]}></td>
+			<td><{$fache_thickness[fache]}></td>
+			<td><{$fache_width[fache]}></td>
+			<td><{$fache_length[fache]}></td>
+			<td><{$fache_count[fache]}></td>
+			<td><{$fache_unitWeight[fache]}></td>
+			<td><{$fache_weight[fache]}></td>
+			<td><{$fache_remark[fache]}></td>
+			<td><{$fache_uploadTime[fache]}></td>
+			<td><{$fache_filename[fache]}></td>
+			<td><{$fache_phase[fache]}></td>
+			<td></td>
+		</tr>
+		<{/section}>
+		
+		<{section name=fachuan loop=$fachuan_materialCode}>
+		<tr class="red">
+			<td><{$fachuan_fachuanDate[fachuan]}></td>
+			<td><{$fachuan_materialCode[fachuan]}></td>
+			<td><{$fachuan_fachuanNumber[fachuan]}></td>
+			<td><{$fachuan_shipsClassification[fachuan]}></td>
+			<td><{$fachuan_material[fachuan]}></td>
+			<td><{$fachuan_thickness[fachuan]}></td>
+			<td><{$fachuan_width[fachuan]}></td>
+			<td><{$fachuan_length[fachuan]}></td>
+			<td><{$fachuan_count[fachuan]}></td>
+			<td><{$fachuan_unitWeight[fachuan]}></td>
+			<td><{$fachuan_weight[fachuan]}></td>
+			<td><{$fachuan_remark[fachuan]}></td>
+			<td><{$fachuan_uploadTime[fachuan]}></td>
+			<td><{$fachuan_filename[fachuan]}></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<{/section}>
+		<{/if}>
+
+	</table>
+	
+	</body>
+</html>

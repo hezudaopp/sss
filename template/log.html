@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>修改记录</title>
+		<style>
+td{
+	border-right:1px solid #cbdced;
+	border-bottom: 1px solid #cbdced;
+	padding:3px;
+}
+
+th{
+	background-color:#cbdced;
+	padding:3px;
+	border-right:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+table{
+	clear:both;
+	border-top: 1px solid #cbdced;
+	border-left: 1px solid #cbdced;
+}
+body{
+	font-size:14px;
+}
+.green{
+	color:green;
+}
+
+.red{
+	color:red;
+}
+
+.blue{
+	color:blue;
+}
+.exportBtn{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:right;
+	display:block;
+	padding:1px;
+}
+
+.export{
+	margin-right:30px;
+	margin-top:2px;
+	margin-bottom:2px;
+	float:left;
+	display:block;
+	padding:1px;
+}
+
+span[class=exportBtn]:hover{
+	background-color:#8A95A1;
+	color:white;
+}
+		</style>
+		<script type="text/javascript">
+		function allChecksChange(obj){
+			checks = document.getElementsByTagName("input");
+			for(i = 0; i < checks.length; i++){
+				o = checks[i];
+				type = o.attributes.getNamedItem("type");
+				if(type.nodeValue == 'checkbox'){
+					o.checked = obj.checked;
+				}
+			}
+			//checks.checked = obj.checked;
+		}
+		
+		function deleteConfirm(){
+		return window.confirm('你确实要删除选中的这些记录吗？');
+		}
+		</script>
+	</head>
+	<body>
+	<div id="sbar" style="width:100%; padding: 0px 0px 4px 0px; border-bottom:1px solid #c9d7f1;">
+			<span><a href="excelUpload.html">表格上传</a></span>
+			| <span><a href="index.html">主页</a></span></span>
+	</div>
+	
+	<{if $errMsg}>
+			<p style="color:red; line-height:1.5em;"><{$errMsg}></p>
+	<{/if}>
+	<form action="exportLog.php" method="post">
+	<div class="export">
+				起始日期:<input type="text" name="fromDate"/>
+	</div>
+	<div class="export">
+				结束日期:<input type="text" name="toDate"/>
+	</div>
+	<div class="export">
+				<input type="submit" value=" 导出记录 "/>
+	</div>
+	</form>
+	<form action="logDelete.php" method="POST" onsubmit="return deleteConfirm()" >
+	<span class="exportBtn">
+				<input type="submit" value=" 删除选中 "/>
+	</span>
+	<table cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<th style="width:20%">时间</th>
+			<th style="width:5%">操作</th>
+			<th style="width:50%">记录</th>
+			<th style="width:10%">删除<input type="checkbox" name="i_d" onchange="allChecksChange(this)">
+		</tr>
+		
+		<{section name=log loop=$ids}>
+		<tr <{if $types[log] eq 'edit'}>class="green"<{elseif $types[log] eq 'delete'}> class="red" <{/if}> >
+			<td><{$times[log]}></td>
+			<td><{if $types[log] eq 'edit'}>修改<{elseif $types[log] eq 'delete'}> 删除 <{else}> 添加 <{/if}></td>
+			<td><{$contents[log]}><{if $types[log] eq 'edit'}><br><{$contents2[log]}><{/if}></td>
+			<td align="center"><input type="checkbox" name="id<{$ids[log]}>" value="<{$ids[log]}>" /></td>
+		</tr>
+		<{/section}>
+
+	</table>
+	
+	</form>
+	</body>
+</html>

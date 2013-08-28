@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>第五步</title>
+</head>
+<body><!--
+“理货”，“运输方式”，“TMCP”，"Z向"，“双船级”，“探伤”，“船号”，“订货月份”，“方向”,"抛丸"，“库存地”<br />
+第三步完成需有“原始清单”，“单重”，“清单重量”三列<br />
+铁运需要加哪些列<br />-->
+<form method="post" name="form1" action="excelOperator5.php" enctype="multipart/form-data">
+<input name="5thFile" id="4thFile" size="38" type="file" style="margin-right: 20px;"/>
+<input value="提交" type="submit"></input>
+<h3>中厚板加价</h3>
+<input value="双船级" id="shuangchuanji" name="shuangchuanji" type="checkbox" checked="checked">双船级认证的船板加价70元/吨<br />
+<input value="TMCP" id="TMCP" name="TMCP" type="checkbox" checked="checked">调质处理加价600元/吨，正火处理加价300元/吨，回火处理加价300元/吨，退火处理加价300元/吨，按TMCP工艺生产的产品加价500元/吨(根据TMCP列判断)<br />
+<input value="Z向性能" id="Zxiangxingneng" name="Zxiangxingneng" type="checkbox" checked="checked"> Z向性能(Z15/Z25/Z35)(根据Z向列判断)<br />
+<input value="平车装运宽厚板" id="pingche" name="pingche" type="checkbox" checked="checked">平车装运宽厚板需用紧固器捆绑的加价25元/吨<br />
+<input value="抛丸" id="zhiwan" name="zhiwan" type="checkbox" checked="checked">抛丸加价60元/吨<br />
+<h3>厚板加价</h3>
+<input value="宽度0" id="kuandu0" name="kuandu0" type="checkbox" checked="checked">0.9米 <= 宽度 <= 1.5米加价10%<br />
+<input value="宽度1" id="kuandu1" name="kuandu1" type="checkbox" checked="checked">2.65米 < 宽度 <= 3.2米加价1%<br />
+<input value="宽度2" id="kuandu2" name="kuandu2" type="checkbox" checked="checked">3.2米 < 宽度 <= 3.6米加价3%<br />
+<input value="宽度3" id="kuandu3" name="kuandu3" type="checkbox" checked="checked">3.6米 < 宽度 <= 4.0米加价5%<br />
+<input value="宽度4" id="kuandu4" name="kuandu4" type="checkbox" checked="checked">4.0米 < 宽度 <= 4.5米加价7%<br />
+<input value="宽度5" id="kuandu5" name="kuandu5" type="checkbox" checked="checked">宽度 >= 4.5米加价10%<br />
+一级探伤(根据探伤列判断)：<input value="厚度00" id="houdu00" name="houdu00" type="checkbox" checked="checked">厚度:8-20mm加价5% |
+<input value="厚度01" id="houdu01" name="houdu01" type="checkbox" checked="checked">厚度:21-50mm加价7% |
+<input value="厚度02" id="houdu02" name="houdu02" type="checkbox" checked="checked">厚度:52mm以上加价10%<br />
+二级探伤(根据探伤列判断)：<input value="厚度10" id="houdu10" name="houdu10" type="checkbox" checked="checked">厚度:8-20mm加价3% |
+<input value="厚度11" id="houdu11" name="houdu11" type="checkbox" checked="checked">厚度:21-50mm加价4% |
+<input value="厚度12" id="houdu12" name="houdu12" type="checkbox" checked="checked">厚度:52mm以上加价6%<br />
+三级探伤(根据探伤列判断)：<input value="厚度20" id="houdu20" name="houdu20" type="checkbox" checked="checked">厚度:8-20mm加价1% |
+<input value="厚度21" id="houdu21" name="houdu21" type="checkbox" checked="checked">厚度:21-50mm加价2% |
+<input value="厚度22" id="houdu22" name="houdu22" type="checkbox" checked="checked">厚度:52mm以上加价3%<br />
+<input value="单一规格(厚板)" id="houbandanyi" name="houbandanyi" type="checkbox" checked="checked">单一规格(常规产品)订货量< 10吨加价50元/吨<br />
+<h3>中板加价</h3>
+<input value="探伤" id="tanshang" name="tanshang" type="checkbox" checked="checked">探伤加价：一级200元/吨、二级150元/吨、三级100元/吨(按探伤列判断)<br />
+<input value="宽度" id="zhongbankuandu" name="zhongbankuandu" type="checkbox" checked="checked">宽度 < 1600mm 加价300元/吨<br />
+<input value="houdu" id="zhongbanhoudu" name="zhongbanhoudu" type="checkbox" checked="checked">订购6 <= 厚度 < 7mm 的产品加价300元/吨(1800 <= 宽度 < 2000mm 且长度 6000mm、8000mm、12000mm范围定尺除外)<br />
+单一规格：<input value="单一规格(中板)" id="zhongbandanyi0" name="zhongbandanyi0" type="checkbox" checked="checked">订货量 <= 5吨加价100元/吨 |
+<input value="单一规格(中板)" id="zhongbandanyi1" name="zhongbandanyi1" type="checkbox" checked="checked">5 < 订货量 < 10吨加价50元/吨 <br /> 
+<input value="火焰切割" id="huoyan" name="huoyan" type="checkbox" checked="checked">火焰切割加价150元/吨。(即中板材质A或B或D级且厚度 > 25；高强板(材质带H32)且厚度 > 20) <br />
+<h3>公式说明</h3>
+出厂含税单价  = (基价+宽度加价+TMCP加价+单规格小于10吨加价+Z15/Z25/Z35+火焰切割)*1.17<hr />
+出厂含税金额  = 出厂含税单价*定额重量<hr />
+短途运费和基本港杂费两列先不做<hr />
+长12.5米上加50%(长大于等于12.5 则AJ(长12.5米上加50%列) = 基本港杂费*0.5)<hr />
+分票垫装费 = 10<hr />
+代理费 = 10<hr />
+理货费用金额 = (出厂含税单价+短途运费+基本港杂费+长12.5米上加50%+分票垫装费+代理费)*定额重量<hr />
+到营口港货款金额(含税货款)= 出厂含税金额 <hr />
+库存费用金额 =  (短途运费+基本港杂费+长12.5米上加50%+分票垫装费+代理费)*定额重量 <hr />
+鲅至葫(汽运)= 150 <hr />
+到厂含税单价(汽运)= 出厂含税单价+短途运费+基本港杂费+长12.5米上加50%+分票垫装费+代理费+到厂运费(汽运) <hr />
+到厂含税价(汽运) = 到厂含税单价(汽运)* 定额重量 <hr />
+到厂运费金额(汽运)  = 到厂运费(汽运)*定额重量<hr />
+到厂运费(船运)= 72<hr />
+到厂含税单价(船运)= 出厂含税单价+短途运费+基本港杂费+长12.5米上加50%+分票垫装费+代理费+到厂运费(船运)<hr />
+到厂含税价(船运) = 到厂含税单价(船运)*定额重量 <hr />
+到厂运费金额(船运) = 到厂运费(船运)*定额重量<hr />
+铁路运费(铁运)= 65 <hr />
+铁运到厂费用((铁运)(含保险)= (基价+超宽加价+TMCP加价+单规格小于10吨+宽1500厚6加价+Z15/Z25/Z35+火焰切割+紧固器加价)*1.17117*运费*代理费<hr />
+铁运到厂费用金额((铁运)(含保险)= 铁运到厂费用((铁运)(含保险)*定额重量 <hr />
+铁运运费金额(铁运) = 铁路运费(铁运)*定额重量<hr />
+汽运到厂单价(含税) = 到厂含税价(汽运)汇总/定额数量汇总<hr />
+船运到厂单价(含税) = 到厂含税价(船运)汇总/定额数量汇总<hr />
+到鲅鱼圈均单价(含税)= 理货费用金额汇总/定额数量汇总<hr />
+</form>
+</body>
+</html>
